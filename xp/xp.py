@@ -4,12 +4,12 @@ import random
 import re
 
 from redbot.core import Config, checks, commands
-from redbot.core.utils.chat_formatting import box
 from redbot.core.bot import Red
-
-from redbot.core.data_manager import storage_type
 from redbot.core.config import Group
+from redbot.core.data_manager import storage_type
 from redbot.core.drivers import IdentifierData
+from redbot.core.utils.chat_formatting import box
+from redbot.core.utils.menus import menu, DEFAULT_CONTROLS
 
 class Xp(commands.Cog):
     """
@@ -94,45 +94,32 @@ class Xp(commands.Cog):
 
     @xp.command()
     @checks.admin_or_permissions(manage_guild=True)
-    async def set(self, ctx, amount: int, *, user: discord.Member = None):
+    async def set(self, ctx, user: discord.Member,amount: int):
         """Set someone's amount of points."""
-        author = ctx.author
-        if not user:
-            user = author
-
         if amount <= 0:
             return await ctx.send("Uh oh, amount has to be more than 0.")
         await self.config.member(user).chars.set(amount)
         await ctx.send(
-            "Set {0}'s balance to {1} points".format(user.mention, amount)
+            "Set {0}'s balance to {1} points".format(user.display_name, amount)
         )
 
     @xp.command()
     @checks.admin_or_permissions(manage_guild=True)
-    async def add(self, ctx, amount: int, *, user: discord.Member = None):
+    async def add(self, ctx, user: discord.Member, amount: int):
         """Add points to someone."""
-        author = ctx.author
-        if not user:
-            user = author
-
-
         if amount <= 0:
             return await ctx.send("Uh oh, amount has to be more than 0.")
         user_points = int(await self.config.member(user).chars())
         user_points += amount
         await self.config.member(user).chars.set(user_points)
         await ctx.send(
-            "Added {0} points to {1}'s balance.".format(amount, user.mention)
+            "Added {0} points to {1}'s balance.".format(amount, user.display_name)
         )
 
     @xp.command()
     @checks.admin_or_permissions(manage_guild=True)
-    async def take(self, ctx, amount: int, *, user: discord.Member = None):
+    async def take(self, ctx, user: discord.Member, amount: int):
         """Take points away from someone."""
-        author = ctx.author
-        if not user:
-            user = author
-
         if amount <= 0:
             return await ctx.send("Uh oh, amount has to be more than 0.")
         user_points = int(await self.config.member(user).chars())
@@ -141,11 +128,11 @@ class Xp(commands.Cog):
             await self.config.member(user).chars.set(user_points)
             await ctx.send(
                 "Took away {0} points from {1}'s balance.".format(
-                    amount, user.mention
+                    amount, user.display_name
                 )
             )
         else:
-            await ctx.send("{0} doesn't have enough :points:".format(user.mention))
+            await ctx.send("{0} doesn't have enough points".format(user.display_name))
 
     @commands.guild_only()
     @checks.guildowner()
