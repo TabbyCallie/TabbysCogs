@@ -1,0 +1,9 @@
+{
+  "author" : ["TabbyCallie (TabbyCallie#4608)"],
+  "name" : "XP",
+  "short" : "xp system",
+  "requirements" : ["tabulate"],
+  "description" : "Simple economy system.",
+  "permissions" : ["Manage Messages", "Embed Links", "Add Reactions"],
+  "tags" : ["points", "xp"],
+}
