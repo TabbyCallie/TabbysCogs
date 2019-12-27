@@ -96,6 +96,8 @@ class Xp(commands.Cog):
     @checks.admin_or_permissions(manage_guild=True)
     async def set(self, ctx, user: discord.Member,amount: int):
         """Set someone's amount of points."""
+        if amount != int(amount)
+            return await ctx.send("Uh oh, amount has to be an integer.")
         await self.config.member(user).chars.set(amount)
         await ctx.send(
             "Set {0}'s balance to {1} points".format(user.display_name, amount)
@@ -105,6 +107,8 @@ class Xp(commands.Cog):
     @checks.admin_or_permissions(manage_guild=True)
     async def add(self, ctx, user: discord.Member, amount: int):
         """Add points to someone."""
+        if amount != int(amount)
+            return await ctx.send("Uh oh, amount has to be an integer.")
         if amount <= 0:
             return await ctx.send("Uh oh, amount has to be more than 0.")
         user_points = int(await self.config.member(user).chars())
@@ -118,6 +122,8 @@ class Xp(commands.Cog):
     @checks.admin_or_permissions(manage_guild=True)
     async def take(self, ctx, user: discord.Member, amount: int):
         """Take points away from someone."""
+        if amount != int(amount)
+            return await ctx.send("Uh oh, amount has to be an integer.")
         if amount <= 0:
             return await ctx.send("Uh oh, amount has to be more than 0.")
         user_points = int(await self.config.member(user).chars())
