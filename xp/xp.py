@@ -96,8 +96,6 @@ class Xp(commands.Cog):
     @checks.admin_or_permissions(manage_guild=True)
     async def set(self, ctx, user: discord.Member,amount: int):
         """Set someone's amount of points."""
-        if amount <= 0:
-            return await ctx.send("Uh oh, amount has to be more than 0.")
         await self.config.member(user).chars.set(amount)
         await ctx.send(
             "Set {0}'s balance to {1} points".format(user.display_name, amount)
@@ -197,7 +195,7 @@ class Xp(commands.Cog):
             enableGuild = cfg['enableGuild']
             enabledChannels = cfg['enabledChannels']
             if enableGuild and msg.channel.id in enabledChannels:
-                chars = len(re.sub(r'[\s]', '', msg.content.lower()))/4
+                chars = int(len(re.sub(r'[\s]', '', msg.content.lower()))/4)
                 #Get the latest memdict.
                 chartotal = await self.config.member(msg.author).chars()
                 #Update the memdict.
