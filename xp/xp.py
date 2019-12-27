@@ -195,7 +195,8 @@ class Xp(commands.Cog):
             enableGuild = cfg['enableGuild']
             enabledChannels = cfg['enabledChannels']
             if enableGuild and msg.channel.id in enabledChannels:
-                chars = int(len(re.sub(r'[\s]', '', msg.content.lower()))/4)
+                numb = len(re.sub(r'[\s]', '', msg.content.lower()))/4
+                chars = int(numb)
                 #Get the latest memdict.
                 chartotal = await self.config.member(msg.author).chars()
                 #Update the memdict.
